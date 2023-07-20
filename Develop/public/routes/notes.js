@@ -4,14 +4,15 @@ const {readFromFile, readAndAppend} = require('../../../helpers/fsUtils');
 
 
 //GET Route for retrieving notes info
+//All of these routes start with /api/notes
 
-notes.get('/notes', (req,res)=>{
-console.info(`${req.mthod} request recieved for notes`);
+notes.get('/', (req,res)=>{
+console.info(`${req.method} request recieved for notes`);
 
 readFromFile('./db/db.json').then((data)=> res.json(JSON.parse(data)));
 });
 
-notes.post('/notes', (req,res)=> {
+notes.post('/', (req,res)=> {
     console.info(`${req.method} request to submit note`);
 
     const {title, text} = req.body;
@@ -20,7 +21,7 @@ notes.post('/notes', (req,res)=> {
         const newPayload = {
             title,
             text,
-            uuid: uuidv4()
+            id: uuidv4()
         }
         readAndAppend(newPayload, './db/db.json');
 
